@@ -37,23 +37,24 @@
                 </thead>
                 <tbody>
                     {% for travel in all_the_travels %}
-                    <tr>
-                        <th scope="row">{{travel.destination}}</th>
+                    <tr>                            
+                        <th scope="row">
+                            
+                                {% csrf_token %}
+                                <a href="/travels/{{travel.id}}">{{travel.destination}}</a>
+                            
+                        </th>
                         <td>{{travel.start_date}}</td>
                         <td>{{travel.end_date}}</td>
                         <td>{{travel.plan}}</td>
                         <td id="form">
-                            <form action="/travels/{{travel.id}}" method="POST">
-                            {% csrf_token %}
-                                <button type="submit">travel</button>
-                            </form>
                             <form action="/travels/{{travel.id}}/edit" method="POST">
                             {% csrf_token %}
-                                <button type="submit">Edit</button>
+                                <button type="submit">Cancelar</button>
                             </form>
                             <form action="/travels/{{travel.id}}/destroy" method="POST">
                             {% csrf_token %}
-                                <button type="submit">Delete</button>
+                                <button type="submit">Eliminar</button>
                             </form>
                         </td>
                     </tr>
