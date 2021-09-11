@@ -44,14 +44,15 @@ h1 {
     color: #101B2E;
     letter-spacing: 2px;
 }
-
-div > table {
-    opacity: 97%;
-    box-shadow: -7px 7px 0 #101B2E;
-}
-
 nav {
     opacity: 97%;
+    box-shadow: 0 7px 0 #101B2E;
+} 
+
+div > table, div > ul.list-group {
+    opacity: 97%;
+    border-bottom-right-radius: 25px;
+    border-top-left-radius: 25px;
     box-shadow: 0 7px 0 #101B2E;
 }
 

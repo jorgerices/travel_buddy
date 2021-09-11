@@ -4,8 +4,7 @@
 
 {% block nav %}
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
-    <div class="container-fluid">
-        <a class="navbar-brand"><h3>Bienvenido {{request.session.user.name}}!</h3></a>             
+    <div class="container-fluid">         
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -22,36 +21,41 @@
 {% endblock %}
 
 {% block content %}
-<div id="wrapper">
-    <div id="">
-        <div>
-            <div>
-                <h1>travel {{a_travel.id}}</h1>
-            </div>
-            {% if messages %}
-            <ul class="messages">    
-            {% for message in messages %}    
-                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>    
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-6 mt-5">
+            <ul class="list-group">
+                <a href="" class="list-group-item list-group-item-action list-group-item-dark px-5">
+                    <h4>{{a_travel.destination}}</h4>
+                </a>
+                <a href="" class="list-group-item list-group-item-action px-5 py-3">
+                    <strong>Planeado por:</strong> {{a_travel.creator}}
+                </a>
+                <a href="" class="list-group-item list-group-item-action px-5 py-3">
+                    <strong>Descripción:</strong> {{a_travel.plan}}
+                </a>
+                <a href="" class="list-group-item list-group-item-action px-5 py-3">
+                    <strong>Desde:</strong> {{a_travel.start_date}}
+                </a>
+                <a href="" class="list-group-item list-group-item-action px-5 py-3">
+                    <strong>Hasta:</strong> {{a_travel.end_date}}
+                </a>
+            </ul>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-5 offset-1 mt-5">
+            <ul class="list-group">
+                <a href="" class="list-group-item list-group-item-action list-group-item-dark px-5">
+                    <h4>¿Quiénes van?</h4>
+                </a>
+                {% for traveller in a_travel.travellers.all %}
+                <a href="" class="list-group-item list-group-item-action px-5 py-3">
+                    {{traveller.firstname}} {{traveller.lastname}}
+                </a>
                 {% endfor %}
             </ul>
-            {% endif %}
         </div>
-        <div class="div_travel">
-            <p>Title: {{a_travel.title}}</p>
-            <p>Network: {{a_travel.network}}</p>
-            <p>Release Date: {{a_travel.release_date}}</p>
-            <p>Description: {{a_travel.description}}</p>
-        </div>
-    <p>Last Updated: {{a_travel.updated_at}}</p>
-    <div>                
-        <form action="/travels/{{a_travel.id}}/edit" method="POST">
-        {% csrf_token %}
-            <button type="submit">Edit</button>
-        </form>
-        <form action="/travels/{{a_travel.id}}/destroy" method="POST">
-        {% csrf_token %}
-            <button type="submit">Eliminar</button>
-        </form>
     </div>
 </div>
 {% endblock %}

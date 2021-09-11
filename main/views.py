@@ -1,5 +1,4 @@
 from .decorators import login_required
-import bcrypt
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.db import IntegrityError
@@ -11,8 +10,12 @@ def index(request):
 
 @login_required
 def travels(request):
+    current_user = request.session['user']['id']
     context = {
         "all_the_travels": Trip.objects.all(),
+        "all_the_personal_travels": Trip.objects.filter(travellers = current_user),
+        "all_the_personal_travels_created": Trip.objects.filter(creator = current_user),
+        "all_the_other_users_travels": Trip.objects.all().exclude(travellers = current_user)
     }
     return render(request, "travels.html", context)
 
@@ -31,26 +34,37 @@ def create_travel(request):
         for key, value in errors.items():
             messages.error(request, value)
         return redirect(f"/travels/new")
-    try:
+    else:
+        creator = User.objects.get(id = request.session['user']['id'])
         create = Trip.objects.create(
             destination = request.POST["destination"], 
             start_date = request.POST["start_date"], 
             end_date = request.POST["end_date"], 
-            plan = request.POST["plan"])
+            plan = request.POST["plan"],
+            creator = creator
+        )
         trip_id = create.id
-    except IntegrityError:
-           messages.error(request, "Este viaje ya existe")
-           return redirect("/travels/new")
-    messages.success(request, "El viaje ha sido creado exitosamente")
+        create.travellers.add(creator)
+        messages.success(request, f"El viaje ha sido creado exitosamente")
+        
+    return redirect(f"/travels/{trip_id}")
+
+@login_required
+def join(request, trip_id):
+    current_user = User.objects.get(id = request.session['user']['id'])
+    this_travel = Trip.objects.get(id = trip_id)
+    this_travel.travellers.add(current_user)
+
+    messages.success(request, "Felicitaciones, te has unido exitosamente a este viaje")
     return redirect(f"/travels/{trip_id}")
 
 @login_required
 def view_travel(request, trip_id):
-    this_travel = Trip.objects.get(id=trip_id)
+    this_travel = Trip.objects.get(id = trip_id)
     context = {
-        "a_travel": this_travel
+        'a_travel': this_travel,
     }
-    return render(request, "view_travel.html", context)
+    return render(request, 'view_travel.html', context)
 
 @login_required
 def delete_travel(request, trip_id):

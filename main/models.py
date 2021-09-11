@@ -40,13 +40,6 @@ class UserManager(models.Manager):
 class TripManager(models.Manager):
     def trip_validator(self, postData):
         errors = {}
-        print(postData['start_date'])
-        print(postData['end_date'])
-        
-        if postData['start_date'] == '':
-            errors['empty_start'] = "Debes ingresar una fecha de inicio"
-        if postData['end_date'] == '':
-            errors['empty_end'] = "Debes ingresar una fecha de finalización"
         
         if postData['end_date'] != '' and postData['start_date']!= '':
             present= datetime.now()
@@ -56,6 +49,7 @@ class TripManager(models.Manager):
                 errors['startdate']= "La fecha de inicio no puede ser previa a la de fecha de hoy"
             elif end < start:
                 errors['enddate']= "La fecha de inicio no puede ser posterior a la de fecha de finalización"
+        
         return errors
 
 class User(models.Model):
