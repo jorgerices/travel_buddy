@@ -56,7 +56,7 @@ def join(request, trip_id):
     this_travel.travellers.add(current_user)
 
     messages.success(request, "Felicitaciones, te has unido exitosamente a este viaje")
-    return redirect(f"/travels/{trip_id}")
+    return redirect("/travels")
 
 @login_required
 def view_travel(request, trip_id):
@@ -73,4 +73,6 @@ def delete_travel(request, trip_id):
     if request.method == "POST":
         a_travel = Trip.objects.get(id=trip_id)
         a_travel.delete()
+
+    messages.success(request, "Has eliminado exitosamente este viaje")
     return redirect("/travels")

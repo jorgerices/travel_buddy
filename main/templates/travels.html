@@ -28,41 +28,39 @@
             <table class="table table-light table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Destino</th>
-                        <th scope="col">Desde</th>
-                        <th scope="col">Hasta</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Acciones</th>
+                        <th class="col-2" scope="col">Destino</th>
+                        <th class="col-2" scope="col">Desde</th>
+                        <th class="col-2" scope="col">Hasta</th>
+                        <th class="col-4" scope="col">Descripción</th>
+                        <th class="col-2" scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% for personal in all_the_personal_travels %}
                     <tr>
-                        {% for personal in all_the_personal_travels %}                          
-                        <td scope="row">
+                        <th scope="row">
                             <a href="/travels/{{personal.id}}">{{personal.destination}}</a>
-                        </td>
+                        </th>
                         <td>{{personal.start_date}}</td>
                         <td>{{personal.end_date}}</td>
                         <td>{{personal.plan}}</td>
-                        {% endfor %}
-                        <td class="row">
-                            {% for personal in all_the_personal_travels %}
-                            <form class="col-6" action="/travels/{{travel.id}}/edit" method="POST">
-                                {% csrf_token %}
-                                <button class="btn btn-primary" type="submit">Cancelar</button>
-                            </form>
-                            {% endfor %}
-                            {% for created in all_the_personal_travels_created %}
-                            <form class="col-6" action="/travels/{{created.id}}/destroy" method="POST">
-                                {% csrf_token %}
-                                <button class="btn btn-primary" type="submit">Eliminar</button>
-                            </form>
-                            {% endfor %}
+                        <td class="">
+                            {% if trip.creator == request.session.user.name %}
+                                {% for created in all_the_personal_travels_created %}                               
+                                <form class="ms-4" action="/travels/{{created.id}}/destroy" method="POST">
+                                    {% csrf_token %}
+                                    <button class="btn btn-primary btn-sm" type="submit">Eliminar</button>
+                                </form>
+                                {% endfor %}
+                            {% else %}
+                                <div>-</div>
+                            {% endif %}                            
                         </td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
-            <div class="row justify-content-center">
+            <div class="row justify-content-end">
                 <div class="col-4">
                     <a type="button" class="btn btn-lg btn-secondary px-5 mt-2" href="/travels/new">Agregar un nuevo viaje</a>
                 </div>
@@ -71,16 +69,16 @@
     </div>
 
     <div class="row">
-        <div class="col-8 offset-4 mt-5">
+        <div class="col-9 offset-3 mt-5">
             <h4>Planes de viaje de otros usuarios</h4>
             <table class="table table-light table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">Destino</th>
-                        <th scope="col">Desde</th>
-                        <th scope="col">Hasta</th>
-                        <th scope="col">Descripción</th>
-                        <th scope="col">Acciones</th>
+                        <th class="col-2" scope="col">Destino</th>
+                        <th class="col-2" scope="col">Desde</th>
+                        <th class="col-2" scope="col">Hasta</th>
+                        <th class="col-4" scope="col">Descripción</th>
+                        <th class="col-2" scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,10 +90,10 @@
                         <td>{{other.start_date}}</td>
                         <td>{{other.end_date}}</td>
                         <td>{{other.plan}}</td>
-                        <td class="row">
-                            <form class="col-6" action="/travels/{{travel.id}}/join" method="POST">
+                        <td class="">
+                            <form class="ms-4" action="/travels/{{other.id}}/join" method="POST">
                                 {% csrf_token %}
-                                <a class="btn btn-primary" type="submit" href="/join/{{trip.id}}">Unirme</button>
+                                <button class="btn btn-primary btn-sm" type="submit">¡Quiero ir!</button>
                             </form>
                         </td>
                     </tr>

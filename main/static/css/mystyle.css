@@ -45,12 +45,12 @@ h1 {
     letter-spacing: 2px;
 }
 nav {
-    opacity: 97%;
+    opacity: 90%;
     box-shadow: 0 7px 0 #101B2E;
 } 
 
 div > table, div > ul.list-group {
-    opacity: 97%;
+    opacity: 90%;
     border-bottom-right-radius: 25px;
     border-top-left-radius: 25px;
     box-shadow: 0 7px 0 #101B2E;

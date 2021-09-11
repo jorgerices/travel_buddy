@@ -12,5 +12,4 @@ urlpatterns = [
     path('travels/<int:trip_id>', views.view_travel),
     path('travels/<int:trip_id>/join', views.join),
     path('travels/<int:trip_id>/destroy', views.delete_travel)
-    
 ]
