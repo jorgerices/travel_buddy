@@ -1,0 +1,60 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: url(../img/mountains.png);
+    background-repeat:no-repeat;
+    background-size: 125%;
+    font-family: 'Roboto', sans-serif;
+}
+
+#login_card {
+    opacity: 97%;
+    width: 379.8px;
+    height: 360.4px;
+    z-index: 99;
+    border-top-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    box-shadow: -7px 7px 0 #101B2E;
+}
+
+#register_card {
+    opacity: 97%;
+    width: 379.8px;
+    height: 360.4px;
+    overflow-y: scroll;
+    z-index: 99;
+    border-top-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+    box-shadow: -7px 7px 0 #101B2E;
+}
+
+.card-footer {
+    font-size: 20px;
+    background-color: white !important;
+}
+
+small {
+    font-size: 13px;
+}
+
+h1 {
+    color: #101B2E;
+    letter-spacing: 2px;
+}
+
+div > table {
+    opacity: 97%;
+    box-shadow: -7px 7px 0 #101B2E;
+}
+
+nav {
+    opacity: 97%;
+    box-shadow: 0 7px 0 #101B2E;
+}
+
+textarea {
+    min-height: 100px !important;
+}

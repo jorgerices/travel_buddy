@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block nav %}
+<nav class="navbar navbar-expand-lg navbar-light bg-info">
+    <div class="container-fluid">
+        <a class="navbar-brand"><h3>Bienvenido {{request.session.user.name}}!</h3></a>             
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="d-flex ms-auto">
+                {% block botones_superiores %}
+                <a class="btn btn-outline-dark me-2" href="/travels">Ir atrás</a>
+                <a class="btn btn-outline-dark" href="/logout">Logout</a>
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</nav>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-4 offset-4 mt-5">
+            <form action="/travels/create" method="POST">
+                <h4>Agrega un nuevo viaje</h4>
+                <div>
+                    <table class="table table-light table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Nuevo viaje</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="form-floating mb-4 px-2">
+                                            <input name="destination" type="text" class="form-control" placeholder="Destino">
+                                            <label for="destination">Destino</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-floating mb-4 px-2">
+                                            <textarea name="plan" class="form-control" placeholder="Descripción"></textarea>
+                                            <label for="plan">Descripción</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-floating mb-4 px-2">
+                                            <input name="start_date" type="date" class="form-control" placeholder="Desde">
+                                            <label for="start_date">Desde</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-floating mb-4 px-2">
+                                            <input name="end_date" type="date" class="form-control" placeholder="Hasta">
+                                            <label for="end_date">Hasta</label>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-lg btn-secondary px-5 mt-2">Listo!</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
